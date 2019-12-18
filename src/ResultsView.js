@@ -1,17 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
-import IncomeView from './IncomeView.js'
-import HouseView from './HouseView.js'
 import './App.css';
 
 function ResultsView(props) {
-    console.log(props.data)
-    let message = "Täytä kaikki kentät."
+    let message = "Syöttämässäsi datassa on virheitä."
     if (props.data.assistance > 0) {
-        message = "Saat asumistukea " + props.data.assistance + " euroa kuussa"
+        message = "Asuntokuntasi saa asumistukea " + props.data.assistance + " euroa kuussa."
     }
     else if (!isNaN(props.data.assistance)) {
-        message = "Et saa lainkaan asumistukea."
+        message = "Asuntokuntasi ei saa lainkaan asumistukea."
     }
     return (
         <div>

@@ -1,26 +1,19 @@
 import React from 'react';
-
-
-import PersonIcon from '@material-ui/icons/Person';
-import PeopleIcon from '@material-ui/icons/People';
-import ChildFriendly from '@material-ui/icons/ChildFriendly';
-
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import TextField from '@material-ui/core/TextField';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
+import PersonIcon from '@material-ui/icons/Person';
+import HelpIcon from '@material-ui/icons/Help';
+import PeopleIcon from '@material-ui/icons/People';
+import ChildFriendly from '@material-ui/icons/ChildFriendly';
 import EuroSymbol from '@material-ui/icons/EuroSymbol';
-
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-
-
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { render } from '@testing-library/react';
 
 class IncomeView extends React.Component {
     constructor(props) {
@@ -36,6 +29,9 @@ class IncomeView extends React.Component {
     };
 
     handleResidentChange = (event, newResidentCount) => {
+        if (!newResidentCount) {
+            return
+        }
         if (newResidentCount === 1) {
             this.setState(prevState => {
                 const prevInitialField = [...prevState.initialIncomeField]
@@ -107,7 +103,7 @@ class IncomeView extends React.Component {
             <div key={resident + "-" + index}>
                 <TextField
                     type="number"
-                    style={{ width: 200 }}
+                    style={{ width: 200, maxWidth: "50%" }}
                     label={label}
                     value={rowData.amount}
                     onChange={(event) => this.setIncomeAmount(index, resident, event.target.value)}
@@ -129,31 +125,26 @@ class IncomeView extends React.Component {
 
                     variant="outlined"
                 />
-                <IconButton
-                    style={{ marginTop: 4 }}
-                    color={isFirstRow ? "primary" : "secondary"}
-                    label="Testi"
-                    size="medium"
-                    onClick={isFirstRow ? () => this.addIncomeRow(resident) : () => this.removeIncomeRow(index, resident)}
-                    aria-label="Add row">
-                    {isFirstRow ? <AddIcon /> : <RemoveIcon />}
-                </IconButton>
+                <Tooltip title={isFirstRow ? "Lisää rivi" : "Poista rivi"}>
+                    <IconButton
+                        style={{ marginTop: 4 }}
+                        color={isFirstRow ? "primary" : "secondary"}
+                        label="Testi"
+                        size="medium"
+                        onClick={isFirstRow ? () => this.addIncomeRow(resident) : () => this.removeIncomeRow(index, resident)}
+                        aria-label="Add row">
+                        {isFirstRow ? <AddIcon /> : <RemoveIcon />}
+                    </IconButton>
+                </Tooltip>
             </div>
         )
 
     }
-
+    componentDidMount = () => {
+        this.props.updateData(this.state)
+    }
     render() {
-        const children = [
-            <ToggleButton key={1} value={1} label="testi">
-                <PersonIcon />
-            </ToggleButton>,
-            <ToggleButton key={2} value={2}>
-                <PeopleIcon />
-            </ToggleButton>,
 
-        ];
-        console.log(this.props.totalEarnings)
         let extraIncomeRows;
         if (this.state.residentCount !== 1) {
             extraIncomeRows = (
@@ -170,10 +161,21 @@ class IncomeView extends React.Component {
                 <div>
                     <h3> Asukkaita</h3>
                     <ToggleButtonGroup size="large" value={this.state.residentCount} exclusive onChange={this.handleResidentChange}>
-                        {children}
+
+                        <ToggleButton key={1} value={1}>
+                            <Tooltip title="1 ihminen">
+                                <PersonIcon />
+                            </Tooltip>,
+                            </ToggleButton>
+                        <ToggleButton key={2} value={2}>
+                            <Tooltip title="2 ihmistä">
+                                <PeopleIcon />
+                            </Tooltip>
+                        </ToggleButton>
                     </ToggleButtonGroup>
                     <TextField
                         type="number"
+                        error={this.state.children < 0}
                         style={{ width: 100 }}
                         label="Lapsia"
                         value={this.state.children}
@@ -189,14 +191,20 @@ class IncomeView extends React.Component {
                     />
                 </div>
                 <div>
-                    <h3>Tulot</h3>
+                    <h3>Tulot
+                        <Tooltip title="Ruokakunnan tuloina huomioidaan ansiotulot, pääomatulot ja useat sosiaalietuudet, mm opintotuki. ">
+                            <IconButton aria-label="help" color="primary">
+                                <HelpIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </h3>
                     {this.renderIncomeRow(this.state.initialIncomeField[0], -1, 0, "Omat tulot")}
                     {this.state.extraIncomeRows[0].map((row, index) => this.renderIncomeRow(row, index, 0))}
                     {extraIncomeRows}
 
                     <p> Tuloja yhteensä vuodessa {totalEarnings} € ({Math.round(totalEarnings / 12)} €/kk)</p>
-                </div>
-            </div>
+                </div >
+            </div >
         )
 
     }

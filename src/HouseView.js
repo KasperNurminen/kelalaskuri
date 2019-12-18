@@ -1,27 +1,11 @@
 import React from 'react';
-
-
-import PersonIcon from '@material-ui/icons/Person';
-import PeopleIcon from '@material-ui/icons/People';
-import ChildFriendly from '@material-ui/icons/ChildFriendly';
-
-import ToggleButton from '@material-ui/lab/ToggleButton';
 import TextField from '@material-ui/core/TextField';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Divider from '@material-ui/core/Divider';
-
 import EuroSymbol from '@material-ui/icons/EuroSymbol';
-
 import HouseSymbol from '@material-ui/icons/House';
-import RemoveIcon from '@material-ui/icons/Remove';
 
-
-import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { render } from '@testing-library/react';
-
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -32,42 +16,61 @@ class HouseView extends React.Component {
         super(props)
         this.state = {
             rent: 0,
+            electricityValue: 0.83,
             includesWater: true,
             includesElectricity: false,
             includesHeating: true,
-            area: 0,
+            area: 40,
             municipality: 0
         };
     };
 
     toggleIncludes = (val) => {
         this.setState(prevState => {
-            return { [val]: !prevState[val] },
-                () => this.props.updateData(this.state)
-        })
+            return { [val]: !prevState[val] }
+        }, () => this.props.updateData(this.state))
     }
     handleMunicipalityChange = event => {
         this.setState({ municipality: event.target.value }, () => this.props.updateData(this.state));
     };
+
+
     render() {
         let area;
         if (this.state.includesElectricity) {
             area = (
-                <TextField
-                    type="number"
-                    style={{ width: 200 }}
-                    label={<p>Asuinpinta-ala (m<sup>2</sup>)</p>}
-                    value={this.state.rent}
-                    onChange={(event) => this.setState({ area: parseInt(event.target.value, 10) }, () => this.props.updateData(this.state))}
-                    variant="outlined"
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <HouseSymbol />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
+                <div>
+                    <TextField
+                        type="number"
+                        style={{ width: 200 }}
+                        label={<span>Asuinpinta-ala (m<sup>2</sup>)</span>}
+                        value={this.state.area}
+                        onChange={(event) => this.setState({ area: parseFloat(event.target.value) }, () => this.props.updateData(this.state))}
+                        variant="outlined"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <HouseSymbol />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <TextField
+                        type="number"
+                        style={{ width: 200 }}
+                        label={<span>Sähkön raha-arvo /m<sup>2</sup>/kk</span>}
+                        value={this.state.electricityValue}
+                        onChange={(event) => this.setState({ electricityValue: parseFloat(event.target.value) }, () => this.props.updateData(this.state))}
+                        variant="outlined"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <EuroSymbol />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </div>
             )
         }
 

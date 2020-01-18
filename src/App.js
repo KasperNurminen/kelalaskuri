@@ -56,7 +56,12 @@ function App() {
     return Math.round(0.8 * (residentialCosts - basicDeductible) * 100) / 100
   }
 
-
+  const experience = (employer, years, description) => {
+    return (
+      <p>{employer}</p>
+      <p>{description}</p>
+    )
+  }
   const calcTotalEarnings = (data) => {
     let total = 0;
     for (const row of data.initialIncomeField) {
@@ -92,7 +97,7 @@ function App() {
       <AppBar position="static">
         <Toolbar style={{ justifyContent: "space-between" }}>
           <Typography variant="h6">
-            Moderni asumistukilaskuri
+            Asumistukilaskuri
         </Typography>
           <a href="mailto:kasper.nurminen@aalto.fi">
             <Button color="inherit">Ominaisuuspyyntö</Button>

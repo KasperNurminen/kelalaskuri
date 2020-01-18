@@ -15,6 +15,14 @@ import EuroSymbol from '@material-ui/icons/EuroSymbol';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const toggleButtonTheme = createMuiTheme({
+    palette: {
+      primary: {main: '#FFF'}
+    }
+  });
 class IncomeView extends React.Component {
     constructor(props) {
         super(props)
@@ -160,6 +168,7 @@ class IncomeView extends React.Component {
             <div className="panel">
                 <div>
                     <h3> Asukkaita</h3>
+                    <ThemeProvider theme={toggleButtonTheme}>
                     <ToggleButtonGroup size="large" value={this.state.residentCount} exclusive onChange={this.handleResidentChange}>
 
                         <ToggleButton key={1} value={1}>
@@ -173,6 +182,7 @@ class IncomeView extends React.Component {
                             </Tooltip>
                         </ToggleButton>
                     </ToggleButtonGroup>
+                    </ThemeProvider>
                     <TextField
                         type="number"
                         error={this.state.children < 0}

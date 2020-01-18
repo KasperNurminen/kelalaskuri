@@ -56,12 +56,6 @@ function App() {
     return Math.round(0.8 * (residentialCosts - basicDeductible) * 100) / 100
   }
 
-  const experience = (employer, years, description) => {
-    return (
-      <p>{employer}</p>
-      <p>{description}</p>
-    )
-  }
   const calcTotalEarnings = (data) => {
     let total = 0;
     for (const row of data.initialIncomeField) {

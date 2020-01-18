@@ -58,5 +58,10 @@ a{
   height: 100vh
   
 }
+.content{
+  display: flex;
+  overflow: scroll;
+  height: 73vh;
 
-body::-webkit-scrollbar { display: none !important }
+}
+.content::-webkit-scrollbar { display: none !important }

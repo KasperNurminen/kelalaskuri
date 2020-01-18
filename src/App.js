@@ -98,7 +98,7 @@ function App() {
           </a>
         </Toolbar>
       </AppBar>
-      <div style={{ display: "flex", overflow: "scroll", height: "73vh" }}>
+      <div className="content" >
         <Grid container spacing={0}>
           <Grid item xs={12} sm={6}>
             <IncomeView updateData={cleanData} totalEarnings={earnings} />

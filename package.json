@@ -1,7 +1,6 @@
 {
   "name": "kela-laskuri",
   "version": "0.1.0",
-  "homepage": "kelalaskuri.herokuapp.com",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.0",

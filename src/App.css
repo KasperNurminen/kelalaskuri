@@ -56,4 +56,7 @@ a{
   background: linear-gradient(to bottom, #eef2f3, #a0a8bd); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   
   height: 100vh
+  
 }
+
+body::-webkit-scrollbar { display: none !important }

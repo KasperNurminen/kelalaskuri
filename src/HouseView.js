@@ -26,6 +26,11 @@ class HouseView extends React.Component {
     };
 
     toggleIncludes = (val) => {
+        if(val === "includesElectricity" && !this.state.includesElectricity){
+            window.setTimeout(() => document
+            .getElementById("houseDetails")
+            .scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}),500)
+        }
         this.setState(prevState => {
             return { [val]: !prevState[val] }
         }, () => this.props.updateData(this.state))
@@ -39,7 +44,7 @@ class HouseView extends React.Component {
         let area;
         if (this.state.includesElectricity) {
             area = (
-                <div>
+                <div id="houseDetails">
                     <TextField
                         type="number"
                         style={{ width: 200 }}
